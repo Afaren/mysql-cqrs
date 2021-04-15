@@ -1,0 +1,25 @@
+spring:
+  shardingsphere:
+    datasource:
+      names: master,slave0
+      master:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.jdbc.Driver
+        url: jdbc:mysql://localhost:4406/mydb?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=GMT
+        username: root
+        password: 111
+      slave0:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.jdbc.Driver
+        url: jdbc:mysql://localhost:5506/mydb?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=GMT
+        username: root
+        password: 111
+    props:
+      sql.show: true
+    masterslave:
+      load-balance-algorithm-type: round_robin
+    sharding:
+      master-slave-rules:
+        master:
+          master-data-source-name: master
+          slave-data-source-names: slave0
